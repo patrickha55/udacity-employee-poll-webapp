@@ -1,9 +1,14 @@
-import { APP_TITLE } from './common/constants';
+import { Route, Routes } from 'react-router';
+import Nav from './components/common/Nav';
+import Dashboard from './components/Dashboard';
 
 function App() {
   return (
     <div className='container'>
-      <h1 className='fw-bold'>{APP_TITLE}</h1>
+      <Nav />
+      <Routes>
+        <Route path='/' exact element={<Dashboard />} />
+      </Routes>
     </div>
   );
 }
