@@ -1,10 +1,15 @@
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import { SET_AUTH_USER } from '../utils/common/constants';
+import { LOGOUT_AUTH_USER, SET_AUTH_USER } from '../utils/common/constants';
 import { _validateUserLogin } from '../_DATA';
 
 export const setAuthUser = (id) => ({
   type: SET_AUTH_USER,
-  id
+  id,
+});
+
+export const logoutAuthUser = (id) => ({
+  type: LOGOUT_AUTH_USER,
+  id,
 });
 
 /**
@@ -43,5 +48,24 @@ export const handleAuthUser = (id, password) =>
       return dispatch(hideLoading('login'));
     } catch (error) {
       dispatch(setAuthUser(null));
+    }
+  };
+
+export const handleLogoutAuthUser = (id) =>
+  dispatch => {
+    try {
+      dispatch(showLoading());
+
+      setTimeout(() => {
+        dispatch(logoutAuthUser(id));
+      }, 1000);
+
+      return dispatch(hideLoading());
+    } catch (error) {
+      dispatch(setAuthUser(id));
+
+      dispatch(hideLoading());
+
+      alert('An error occurred while logging out.');
     }
   };

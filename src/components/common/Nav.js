@@ -1,6 +1,17 @@
 import { Link } from 'react-router-dom';
-import prisonMike from '../../images/prison-mike.png';
-const Nav = () => {
+import division from '../../images/division.png';
+import { connect } from 'react-redux';
+import { handleLogoutAuthUser } from '../../actions/authUser';
+
+const Nav = ({ user, dispatch }) => {
+  const handleLogout = (e) => {
+    e.preventDefault();
+
+    dispatch(handleLogoutAuthUser(user.id));
+  };
+
+  console.log(user.avatarURL);
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -20,16 +31,18 @@ const Nav = () => {
             </li>
             <div className='d-flex justify-content-end w-100'>
               <li className="nav-item">
-                <Link className="nav-link" to={`/user/${1}`}>
-                  <img src={prisonMike}
-                    alt="Prison Mike"
+                <Link className="nav-link" to={`/user/${user.id}`}>
+                  <img
+                    src={user.avatarURL === null ? division : `${user.avatarURL}`}
+                    alt={user.name}
                     width="30"
                     height="30"
                     className="d-inline-block align-text-top rounded-circle" />
+                  <span className='ps-2'>{user.name}</span>
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/logout">Logout</Link>
+                <a className="nav-link cursor-pointer" href='#' onClick={handleLogout}>Logout</a>
               </li>
             </div>
           </ul>
@@ -39,4 +52,11 @@ const Nav = () => {
   );
 };
 
-export default Nav;
+const mapStateToProps = ({ authUser, users }) => {
+  return {
+    authUser,
+    user: users[authUser],
+  };
+};
+
+export default connect(mapStateToProps)(Nav);
