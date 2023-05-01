@@ -1,30 +1,34 @@
-import { _getUsers } from '../../_DATA';
+import { hideLoading, showLoading } from 'react-redux-loading-bar';
+import { _getQuestions, _getUsers } from '../_DATA';
+import { setAuthUser } from './authUser';
+import { receiveQuestions } from './questions';
+import { receiveUsers } from './users';
 
-/**
- * This is the action creator for INITIAL_DATA.
- * @param {*} data includes users and questions.
- * @returns {{data: *, type: string}}
- */
-function INITIAL_DATA(data) {
-  return {
-    type: INITIAL_DATA,
-    data
-  };
-}
+const authUser = '';
 
 /**
  * This function is used to load initial data.
  * @returns {function(...[*]=)}
  */
-function loadInitialData() {
+export function loadInitialData() {
   return async dispatch => {
     try {
+      dispatch(showLoading());
+
       const users = await _getUsers();
       const questions = await _getQuestions();
 
-      return dispatch(INITIAL_DATA({ users, questions }));
+      dispatch(receiveUsers(users));
+      dispatch(receiveQuestions(questions));
+      dispatch(setAuthUser(authUser));
+
+      return dispatch(hideLoading());
     } catch (error) {
       alert('An error occurred while loading initial data. Please try again later.');
+
+      console.log(error);
+
+      dispatch(hideLoading());
     }
   };
 }

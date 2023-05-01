@@ -1,4 +1,4 @@
-import { INITIAL_DATA } from '../common/constants';
+import { RECEIVE_USERS } from '../utils/common/constants';
 
 /**
  * This is the reducer for users.
@@ -9,10 +9,10 @@ import { INITIAL_DATA } from '../common/constants';
  */
 export default function users(state = [], action) {
   switch (action.type) {
-    case INITIAL_DATA:
+    case RECEIVE_USERS:
       return {
         ...state,
-        ...action.data.users,
+        ...action.users,
       };
     default:
       return state;

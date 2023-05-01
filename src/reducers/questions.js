@@ -1,4 +1,4 @@
-import { INITIAL_DATA } from '../common/constants';
+import { RECEIVE_QUESTIONS } from '../utils/common/constants';
 
 /**
  * This is the reducer for questions.
@@ -8,10 +8,10 @@ import { INITIAL_DATA } from '../common/constants';
  */
 export default function questions(state = [], action) {
   switch (action.type) {
-    case INITIAL_DATA:
+    case RECEIVE_QUESTIONS:
       return {
         ...state,
-        ...action.data.questions,
+        ...action.questions,
       };
     default:
       return state;
