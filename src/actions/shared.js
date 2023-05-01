@@ -22,7 +22,7 @@ export function loadInitialData() {
       dispatch(receiveQuestions(questions));
       dispatch(setAuthUser(authUser));
 
-      return dispatch(hideLoading());
+      dispatch(hideLoading());
     } catch (error) {
       alert('An error occurred while loading initial data. Please try again later.');
 

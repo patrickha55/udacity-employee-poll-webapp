@@ -3,10 +3,12 @@ import EmployeesImage from '../images/division.png';
 import { Formik } from 'formik';
 import { handleAuthUser } from '../actions/authUser';
 import { connect } from 'react-redux';
+import LoadingBar from 'react-redux-loading-bar';
 
 const Login = ({ dispatch }) => {
   return (
     <>
+      <LoadingBar scope="login" />
       <h2 className='text-center p-5'>Employee Poll</h2>
       <div className='row'>
         <div className='col-6'>

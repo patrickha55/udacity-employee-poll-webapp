@@ -4,7 +4,7 @@ import Dashboard from './Dashboard';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { loadInitialData } from '../actions/shared';
-import { LoadingBar } from 'react-redux-loading-bar';
+import LoadingBar from 'react-redux-loading-bar';
 import Login from './Login';
 
 function App({ dispatch, authUser, loading }) {

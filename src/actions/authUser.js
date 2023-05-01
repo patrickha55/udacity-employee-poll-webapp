@@ -16,31 +16,31 @@ export const setAuthUser = (id) => ({
 export const handleAuthUser = (id, password) =>
   async dispatch => {
     try {
-      dispatch(showLoading());
+      dispatch(showLoading('login'));
 
       if (id === null || id === undefined || id === '') {
+        dispatch(hideLoading('login'));
         alert('Please enter your username.');
-        dispatch(hideLoading());
         return;
       }
 
       if (password === null || password === undefined || password === '') {
+        dispatch(hideLoading('login'));
         alert('Please enter your password.');
-        dispatch(hideLoading());
         return;
       }
 
       const result = await _validateUserLogin(id, password);
 
       if (result === false) {
+        dispatch(hideLoading('login'));
         alert('Invalid username or password.');
-        dispatch(hideLoading());
         return;
       }
 
       dispatch(setAuthUser(id));
 
-      return dispatch(hideLoading());
+      return dispatch(hideLoading('login'));
     } catch (error) {
       dispatch(setAuthUser(null));
     }
