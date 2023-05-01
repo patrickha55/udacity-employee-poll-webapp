@@ -7,3 +7,41 @@ export const setAuthUser = (id) => ({
   id
 });
 
+/**
+ * This is the handler for authenticating the user.
+ * @param {*} id of the user.
+ * @param {*} password of the user. 
+ * @returns 
+ */
+export const handleAuthUser = (id, password) =>
+  async dispatch => {
+    try {
+      dispatch(showLoading());
+
+      if (id === null || id === undefined || id === '') {
+        alert('Please enter your username.');
+        dispatch(hideLoading());
+        return;
+      }
+
+      if (password === null || password === undefined || password === '') {
+        alert('Please enter your password.');
+        dispatch(hideLoading());
+        return;
+      }
+
+      const result = await _validateUserLogin(id, password);
+
+      if (result === false) {
+        alert('Invalid username or password.');
+        dispatch(hideLoading());
+        return;
+      }
+
+      dispatch(setAuthUser(id));
+
+      return dispatch(hideLoading());
+    } catch (error) {
+      dispatch(setAuthUser(null));
+    }
+  };

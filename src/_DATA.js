@@ -132,6 +132,30 @@ function generateUID() {
   return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 }
 
+/**
+ * This method is used to validate a user login.
+ * @param {*} id of the user
+ * @param {*} password of the user
+ * @returns {Promise<boolean>} Promise boolean represents the validation result
+ */
+export function _validateUserLogin(id, password) {
+  return new Promise((resolve) => {
+    let isValid = false;
+
+    if (users[id] === undefined) {
+      isValid = false;
+    } else {
+      const currentUserPassword = users[id].password;
+
+      if (currentUserPassword === password) {
+        isValid = true;
+      }
+    }
+
+    setTimeout(() => resolve(isValid), 1000);
+  });
+}
+
 export function _getUsers() {
   return new Promise((resolve) => {
     setTimeout(() => resolve({ ...users }), 1000);

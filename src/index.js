@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import App from './components/App';
 import { createStore } from 'redux';
 import middlewares from './middlewares';
 import reducer from './reducers';
@@ -11,6 +11,7 @@ import { BrowserRouter } from 'react-router-dom';
 const store = createStore(reducer, middlewares);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>
