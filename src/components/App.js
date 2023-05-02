@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { loadInitialData } from '../actions/shared';
 import LoadingBar from 'react-redux-loading-bar';
 import Login from './Login';
+import Footer from './common/Footer';
 
 function App({ dispatch, authUser, loading }) {
   useEffect(() => {
@@ -30,6 +31,7 @@ function App({ dispatch, authUser, loading }) {
               </Routes>
             </>
       }
+      <Footer />
     </div >
   );
 }

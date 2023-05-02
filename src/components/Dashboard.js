@@ -1,9 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import Questions from './Questions';
 
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
+    <>
+      <Questions title={'New Questions'} isNewQuestion={true} />
+      <Questions title={'Completed'} isNewQuestion={false} />
+    </>
   );
 };
 
-export default Dashboard;
+export default connect()(Dashboard);
