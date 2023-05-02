@@ -1,6 +1,6 @@
 import { RECEIVE_QUESTIONS } from '../utils/common/constants';
 
-export const receiveQuestions = (question) => ({
+export const receiveQuestions = (questions) => ({
   type: RECEIVE_QUESTIONS,
-  question,
+  questions,
 });

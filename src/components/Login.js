@@ -10,7 +10,7 @@ const Login = ({ dispatch }) => {
     <>
       <LoadingBar scope="login" />
       <h2 className='text-center p-5'>Employee Poll</h2>
-      <div className='row'>
+      <div className='row' style={{ 'minHeight': '81vh' }}>
         <div className='col-6'>
           {
             // Employee icons created by kerismaker - Flaticon

@@ -10,10 +10,8 @@ const Nav = ({ user, dispatch }) => {
     dispatch(handleLogoutAuthUser(user.id));
   };
 
-  console.log(user.avatarURL);
-
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-light sticky-top bg-light border-bottom">
       <div className="container-fluid">
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
@@ -41,7 +39,7 @@ const Nav = ({ user, dispatch }) => {
                   <span className='ps-2'>{user.name}</span>
                 </Link>
               </li>
-              <li className="nav-item">
+              <li className="ms-2 nav-item">
                 <a className="nav-link cursor-pointer" href='#' onClick={handleLogout}>Logout</a>
               </li>
             </div>
