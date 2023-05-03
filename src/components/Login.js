@@ -1,11 +1,20 @@
-import React from 'react';
-import EmployeesImage from '../images/division.png';
+import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import { handleAuthUser } from '../actions/authUser';
-import { connect } from 'react-redux';
+import Button from './common/Button';
+import EmployeesImage from '../images/division.png';
+import Input from './common/Input';
 import LoadingBar from 'react-redux-loading-bar';
+import React, { useEffect } from 'react';
+import wrapCommonRouter from '../utils/routerHelper';
 
-const Login = ({ dispatch }) => {
+const Login = ({ dispatch, authUser, navigate }) => {
+  useEffect(() => {
+    if (authUser !== '') {
+      navigate('/');
+    }
+  }, [authUser, navigate]);
+
   return (
     <>
       <LoadingBar scope="login" />
@@ -43,36 +52,30 @@ const Login = ({ dispatch }) => {
               }) => (
                 <form onSubmit={handleSubmit}>
                   <div className="mb-3">
-                    <label htmlFor="inputUsername" className="form-label">Username</label>
-                    <input
-                      type="text"
+                    <Input
+                      label='Username'
                       name='username'
-                      className="form-control"
-                      id="inputUsername"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
                       value={values.username}
-                      required />
+                      isRequired={true}
+                    />
                   </div>
                   <div className="mb-3">
-                    <label htmlFor="inputPassword" className="form-label">Password</label>
-                    <input
-                      type="password"
+                    <Input
+                      label='Password'
                       name='password'
-                      className="form-control"
-                      id="inputPassword"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
                       value={values.password}
-                      required
-                      autoComplete='on' />
+                      isRequired={true}
+                    />
                   </div>
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    disabled={isSubmitting}>
-                    Submit
-                  </button>
+                  <Button
+                    type='submit'
+                    isDisabled={isSubmitting}
+                    name={isSubmitting ? 'Logging in...' : 'Login'}
+                  />
                 </form>
               )
             }
@@ -83,4 +86,9 @@ const Login = ({ dispatch }) => {
   );
 };
 
-export default connect()(Login);
+const mapStateToProps = ({ authUser }, { router }) => ({
+  authUser,
+  navigate: router.navigate,
+});
+
+export default wrapCommonRouter(connect(mapStateToProps)(Login));
