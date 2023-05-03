@@ -1,18 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './components/App';
-import { createStore } from 'redux';
-import middlewares from './middlewares';
-import reducer from './reducers';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import configureStore from './utils/configureStore';
+import ReactDOM from 'react-dom/client';
 
-const store = createStore(reducer, middlewares);
+const store = configureStore();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-root.render(
+const renderApp = () => root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
@@ -21,3 +19,9 @@ root.render(
     </Provider>
   </React.StrictMode>
 );
+
+if (process.env.NODE_ENV !== 'production' && module.hot) {
+  module.hot.accept('./components/App', renderApp);
+}
+
+renderApp();

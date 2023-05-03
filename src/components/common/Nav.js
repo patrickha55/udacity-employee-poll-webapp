@@ -40,7 +40,7 @@ const Nav = ({ user, dispatch }) => {
                 </Link>
               </li>
               <li className="ms-2 nav-item">
-                <a className="nav-link cursor-pointer" href='#' onClick={handleLogout}>Logout</a>
+                <button className="border-0 text-secondary h-100" onClick={handleLogout}>Logout</button>
               </li>
             </div>
           </ul>
