@@ -18,12 +18,11 @@ const Question = ({
 };
 
 const mapStateToProps = ({
-  dispatch,
+  questions,
 }, {
-  question,
+  id,
 }) => ({
-  dispatch,
-  question,
+  question: questions[id],
 });
 
 export default connect(mapStateToProps)(Question);

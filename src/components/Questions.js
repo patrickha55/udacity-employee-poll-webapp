@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Question from './Question';
 
 const Questions = ({
-  filteredQuestions,
+  filteredQuestionIds,
   title
 }) => {
   return (
@@ -12,11 +12,10 @@ const Questions = ({
       <h3 className='text-center p-4 fw-bold'>{title}</h3>
       <div className='row mx-1 mb-2'>
         {
-          filteredQuestions.map(question => (
-            <div className='col-4'>
+          filteredQuestionIds.map(id => (
+            <div key={id} className='col-4'>
               <Question
-                key={question.id}
-                question={question}
+                id={id}
               />
             </div>
           ))
@@ -33,31 +32,28 @@ const mapStateToProps = ({
   title,
   isNewQuestion
 }) => {
-  let newQuestions = [];
-  let answeredQuestions = [];
+  let newQuestionIds = [], answeredQuestionIds = [];
 
   if (isNewQuestion === true) {
-    newQuestions = Object.values(questions)
-      .filter(question =>
-        question.optionOne.votes.find(vote => vote === authUser) !== undefined
+    newQuestionIds = Object.keys(questions)
+      .filter(id =>
+        !Object.values(questions[id].optionOne.votes).includes(authUser)
         ||
-        question.optionTwo.votes.find(vote => vote === authUser) !== undefined
-      )
-      .sort((a, b) => b.timestamp - a.timestamp);
+        !Object.values(questions[id].optionTwo.votes).includes(authUser)
+      );
   }
 
   if (isNewQuestion === false) {
-    answeredQuestions = Object.values(questions)
-      .filter(question =>
-        question.optionOne.votes.find(vote => vote !== authUser) !== undefined
+    answeredQuestionIds = Object.keys(questions)
+      .filter(id =>
+        Object.values(questions[id].optionOne.votes).includes(authUser)
         ||
-        question.optionTwo.votes.find(vote => vote !== authUser) !== undefined
-      )
-      .sort((a, b) => b.timestamp - a.timestamp);
+        Object.values(questions[id].optionTwo.votes).includes(authUser)
+      );
   }
 
   return {
-    filteredQuestions: isNewQuestion === true ? newQuestions : answeredQuestions,
+    filteredQuestionIds: isNewQuestion === true ? newQuestionIds : answeredQuestionIds,
     title,
   };
 };
