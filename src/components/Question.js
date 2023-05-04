@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Card from './common/Card';
-import { formatDate, timestampToRelativeTime } from '../utils/dateHelper';
+import { formatDate, timestampToRelativeTime } from '../utils/dateHelper/dateHelper';
 
 const Question = ({
   question,
