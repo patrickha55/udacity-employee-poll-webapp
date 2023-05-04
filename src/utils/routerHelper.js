@@ -1,6 +1,10 @@
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 
-export default function wrapCommonRouter(Component) {
+/**
+ * @param {JSX.Element} Component 
+ * @returns {JSX.Element} A new component with additional router's hooks
+ */
+export default function withRouter(Component) {
   return props => {
     const params = useParams();
     const location = useLocation();

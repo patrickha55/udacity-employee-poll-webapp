@@ -6,7 +6,7 @@ import EmployeesImage from '../images/division.png';
 import Input from './common/Input';
 import LoadingBar from 'react-redux-loading-bar';
 import React, { useEffect } from 'react';
-import wrapCommonRouter from '../utils/routerHelper';
+import withRouter from '../utils/routerHelper';
 
 const Login = ({ dispatch, authUser, navigate }) => {
   useEffect(() => {
@@ -53,6 +53,7 @@ const Login = ({ dispatch, authUser, navigate }) => {
                 <form onSubmit={handleSubmit}>
                   <div className="mb-3">
                     <Input
+                      type='text'
                       label='Username'
                       name='username'
                       handleChange={handleChange}
@@ -63,6 +64,7 @@ const Login = ({ dispatch, authUser, navigate }) => {
                   </div>
                   <div className="mb-3">
                     <Input
+                      type='password'
                       label='Password'
                       name='password'
                       handleChange={handleChange}
@@ -91,4 +93,4 @@ const mapStateToProps = ({ authUser }, { router }) => ({
   navigate: router.navigate,
 });
 
-export default wrapCommonRouter(connect(mapStateToProps)(Login));
+export default withRouter(connect(mapStateToProps)(Login));

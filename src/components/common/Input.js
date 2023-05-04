@@ -1,3 +1,19 @@
+/**
+ * @param {{
+ *  id: string,
+ *  label: string,
+ *  name: string,
+ *  additionalClassNames: string,
+ *  handleChange: function,
+ *  handleBlur: function,
+ *  value: string,
+ *  isRequired: boolean,
+ *  placeHolder: string,
+ *  type: string,
+ * }} props
+ * 
+ * @returns {JSX.Element}
+ */
 const Input = ({
   id,
   label,
@@ -8,6 +24,7 @@ const Input = ({
   value,
   isRequired = false,
   placeHolder = '',
+  type,
 }) => {
   return (
     <>
@@ -15,7 +32,7 @@ const Input = ({
       {
         isRequired === true ? (
           <input
-            type="text"
+            type={type}
             name={name}
             className={`form-control ${additionalClassNames}`}
             id={id}
@@ -27,7 +44,7 @@ const Input = ({
           />
         ) : (
           <input
-            type="text"
+            type={type}
             name={name}
             className={`form-control ${additionalClassNames}`}
             id={id}
