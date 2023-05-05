@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router';
 import Nav from './common/Nav';
 import Dashboard from './Dashboard';
+import Leaderboard from './Leaderboard';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { loadInitialData } from '../actions/shared';
@@ -12,7 +13,9 @@ import withRouter from '../utils/routerHelper';
 
 function App({ dispatch, authUser, loading, navigate }) {
   useEffect(() => {
-    dispatch(loadInitialData());
+    if (authUser === null) {
+      dispatch(loadInitialData());
+    }
 
     if (authUser === '') {
       navigate('/login');
@@ -34,7 +37,7 @@ function App({ dispatch, authUser, loading, navigate }) {
           <Routes>
             <Route path='/' exact element={<Dashboard />} />
             <Route path='/login' element={<Login />} />
-            <Route path='/leaderboard' element={<Dashboard />} />
+            <Route path='/leaderboard' element={<Leaderboard />} />
             <Route path='/new' element={<CreateQuestion />} />
             <Route path='*' element={<h1>404 Not Found</h1>} />
           </Routes>

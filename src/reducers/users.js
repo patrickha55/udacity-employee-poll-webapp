@@ -1,4 +1,4 @@
-import { RECEIVE_USERS } from '../utils/common/constants';
+import { CREATE_QUESTION, RECEIVE_USERS } from '../utils/common/constants';
 
 /**
  * This is the reducer for users.
@@ -13,6 +13,16 @@ export default function users(state = {}, action) {
       return {
         ...state,
         ...action.users,
+      };
+    case CREATE_QUESTION:
+      const { author, id } = action.question;
+
+      return {
+        ...state,
+        [author]: {
+          ...state[author],
+          questions: state[author].questions.concat(id),
+        },
       };
     default:
       return state;
