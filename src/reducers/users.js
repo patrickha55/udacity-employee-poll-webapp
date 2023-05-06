@@ -3,7 +3,15 @@ import { CREATE_QUESTION, RECEIVE_USERS } from '../utils/common/constants';
 /**
  * This is the reducer for users.
  * 
- * @param {*} state is the current state.
+ * @param {{
+ *  id: string,
+ *  name: string,
+ *  avatarURL: string,
+ *  answers: {
+ *  [questionId: string]: string,
+ *  },
+ *  questions: string[],
+ * }} state is the current user's state.
  * @param {*} action is the action to be executed.
  * @returns {*} the new state. 
  */

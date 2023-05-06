@@ -38,7 +38,7 @@ const mapStateToProps = ({
     newQuestionIds = Object.keys(questions)
       .filter(id =>
         !Object.values(questions[id].optionOne.votes).includes(authUser)
-        ||
+        &&
         !Object.values(questions[id].optionTwo.votes).includes(authUser)
       );
   }

@@ -7,7 +7,19 @@ import { CREATE_QUESTION, RECEIVE_QUESTIONS } from '../utils/common/constants';
  * - RECEIVE_QUESTIONS
  * - CREATE_QUESTION
  * 
- * @param {*} state is the current state.
+ * @param {{
+ *  id: string,
+ *  author: string,
+ *  timestamp: number,
+ *  optionOne: {
+ *    votes: string[],
+ *    text: string,
+ *  },
+ *  optionTwo: {
+ *    votes: string[],
+ *    text: string,
+ * },
+ * }} state is the current question's state.
  * @param {*} action is the action to be executed.
  * @returns {*} the new state.
  */
