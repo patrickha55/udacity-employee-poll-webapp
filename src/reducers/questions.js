@@ -1,4 +1,4 @@
-import { CREATE_QUESTION, RECEIVE_QUESTIONS } from '../utils/common/constants';
+import { CHOOSE_QUESTION_OPTION, CREATE_QUESTION, RECEIVE_QUESTIONS } from '../utils/common/constants';
 
 /**
  * This is the reducer for questions.
@@ -34,6 +34,19 @@ export default function questions(state = {}, action) {
       return {
         ...state,
         [action.question.id]: action.question,
+      };
+    case CHOOSE_QUESTION_OPTION:
+      const { authedUser, qid, answer } = action.option;
+
+      return {
+        ...state,
+        [qid]: {
+          ...state[qid],
+          [answer]: {
+            ...state[qid][answer],
+            votes: state[qid][answer].votes.concat([authedUser]),
+          }
+        }
       };
     default:
       return state;

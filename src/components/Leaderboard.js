@@ -44,6 +44,7 @@ const Leaderboard = ({ users }) => {
 const mapStateToProps = ({
   users
 }) => {
+  // TODO: Sort users by the sum of the number of questions they’ve answered and the number of questions they’ve asked
   return {
     users
   };

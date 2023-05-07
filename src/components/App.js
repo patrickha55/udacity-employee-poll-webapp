@@ -10,6 +10,7 @@ import Login from './Login';
 import Footer from './common/Footer';
 import CreateQuestion from './CreateQuestion';
 import withRouter from '../utils/routerHelper';
+import QuestionDetail from './QuestionDetail';
 
 function App({ dispatch, authUser, loading, navigate }) {
   useEffect(() => {
@@ -38,8 +39,8 @@ function App({ dispatch, authUser, loading, navigate }) {
             <Route path='/' exact element={<Dashboard />} />
             <Route path='/login' element={<Login />} />
             <Route path='/leaderboard' element={<Leaderboard />} />
-            <Route path='/new' element={<CreateQuestion />} />
             <Route path='/add' element={<CreateQuestion />} />
+            <Route path='/question/:id' element={<QuestionDetail />} />
             <Route path='*' element={<h1>404 Not Found</h1>} />
           </Routes>
       }
