@@ -4,8 +4,6 @@ import withRouter from '../utils/routerHelper';
 import { handleChooseQuestionOption } from '../actions/questions';
 
 const QuestionDetail = ({ question, user, authUser, navigate, dispatch }) => {
-  let result = <h2 className='text-center'>No questions found</h2>;
-
   const handleClick = (event, qid, flag) => {
     event.preventDefault();
 
@@ -23,10 +21,18 @@ const QuestionDetail = ({ question, user, authUser, navigate, dispatch }) => {
     }
   };
 
-  const isTheFirstQuestionAnswered = question.optionOne.votes.includes(authUser);
-  const isTheSecondQuestionAnswered = question.optionTwo.votes.includes(authUser);
+  let result = <div className='text-center d-flex flex-column align-items-center'>
+    <h2>No question found</h2>
+    <div role='button' className='gap-2 d-flex'>
+      <span className="material-icons-round">arrow_back</span>
+      <p onClick={handleGoBack}>Go Back</p>
+    </div>
+  </div>;
 
   if (question) {
+    const isTheFirstQuestionAnswered = question.optionOne.votes.includes(authUser);
+    const isTheSecondQuestionAnswered = question.optionTwo.votes.includes(authUser);
+
     result = (
       <div className='px-4 py-5 my-5 text-center position-relative'>
         <div role='button' className='gap-2 position-absolute top-0 left-0 d-flex'>
@@ -74,9 +80,19 @@ const QuestionDetail = ({ question, user, authUser, navigate, dispatch }) => {
 const mapStateToProps = ({ questions, users, authUser }, { router }) => {
   const { id } = router.params;
 
+  const question = questions[id];
+
+  if (question) {
+    return {
+      question,
+      user: users[questions[id].author],
+      authUser,
+      navigate: router.navigate,
+    };
+  }
+
   return {
-    question: questions[id],
-    user: users[questions[id].author],
+    question,
     authUser,
     navigate: router.navigate,
   };
