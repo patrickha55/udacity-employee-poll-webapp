@@ -40,6 +40,8 @@ const mapStateToProps = ({
         !Object.values(questions[id].optionOne.votes).includes(authUser)
         &&
         !Object.values(questions[id].optionTwo.votes).includes(authUser)
+      ).sort(
+        (first, second) => questions[second].timestamp - questions[first].timestamp
       );
   }
 
@@ -49,7 +51,9 @@ const mapStateToProps = ({
         Object.values(questions[id].optionOne.votes).includes(authUser)
         ||
         Object.values(questions[id].optionTwo.votes).includes(authUser)
-      );
+      ).sort(
+        (first, second) => questions[second].timestamp - questions[first].timestamp
+      );;
   }
 
   return {
