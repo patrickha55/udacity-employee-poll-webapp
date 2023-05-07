@@ -40,7 +40,7 @@ function App({ dispatch, authUser, loading, navigate }) {
             <Route path='/login' element={<Login />} />
             <Route path='/leaderboard' element={<Leaderboard />} />
             <Route path='/add' element={<CreateQuestion />} />
-            <Route path='/question/:id' element={<QuestionDetail />} />
+            <Route path='/question/:question_id' element={<QuestionDetail />} />
             <Route path='*' element={<h1>404 Not Found</h1>} />
           </Routes>
       }

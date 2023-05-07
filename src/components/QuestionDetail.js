@@ -79,13 +79,16 @@ const QuestionDetail = ({ question, user, authUser, navigate, dispatch }) => {
 
 const mapStateToProps = ({ questions, users, authUser }, { router }) => {
   const { id } = router.params;
+  const { question_id } = router.params;
 
   const question = questions[id];
+  const question = questions[question_id];
 
   if (question) {
     return {
       question,
       user: users[questions[id].author],
+      user: users[questions[question_id].author],
       authUser,
       navigate: router.navigate,
     };
