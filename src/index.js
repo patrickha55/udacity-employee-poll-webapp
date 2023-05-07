@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import configureStore from './utils/configureStore';
 import ReactDOM from 'react-dom/client';
+import 'material-icons/iconfont/material-icons.css';
 
 const store = configureStore();
 

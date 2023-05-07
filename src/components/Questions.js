@@ -8,8 +8,8 @@ const Questions = ({
   title
 }) => {
   return (
-    <div className='rounded-1 shadow-lg mt-2 mb-5'>
-      <h3 className='text-center p-4 fw-bold'>{title}</h3>
+    <div className='shadow p-3 mt-2 mb-4 bg-body rounded'>
+      <h1 className='display-5 fw-lighter text-center p-4'>{title}</h1>
       <div className='row mx-1 mb-2'>
         {
           filteredQuestionIds.map(id => (

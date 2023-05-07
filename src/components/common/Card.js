@@ -7,7 +7,7 @@ const Card = (item) => {
       <div className="card-body">
         <h5 className="card-title">{item.title}</h5>
         <p className="card-text text-secondary">{item.body}</p>
-        <Link to={`question/${item.id}`} className="btn btn-primary">{item.button}</Link>
+        <Link to={`question/${item.id}`} className="btn btn-info">{item.button}</Link>
       </div>
       <div className="card-footer text-muted">
         {item.timestamp}
