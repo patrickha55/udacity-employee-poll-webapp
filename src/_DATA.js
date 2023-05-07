@@ -1,9 +1,9 @@
 let users = {
   sarahedo: {
     id: 'sarahedo',
-    password:'password123',
+    password: 'password123',
     name: 'Sarah Edo',
-    avatarURL: null,
+    avatarURL: "https://tylermcginnis.com/would-you-rather/sarah.jpg",
     answers: {
       "8xf0y6ziyjabvozdd253nd": 'optionOne',
       "6ni6ok3ym7mf1p33lnez": 'optionOne',
@@ -14,9 +14,9 @@ let users = {
   },
   tylermcginnis: {
     id: 'tylermcginnis',
-    password:'abc321',
+    password: 'abc321',
     name: 'Tyler McGinnis',
-    avatarURL: null,
+    avatarURL: "https://tylermcginnis.com/would-you-rather/tyler.jpg",
     answers: {
       "vthrdm985a262al8qx3do": 'optionOne',
       "xj352vofupe1dqz9emx13r": 'optionTwo',
@@ -24,10 +24,10 @@ let users = {
     questions: ['loxhs1bqm25b708cmbf3g', 'vthrdm985a262al8qx3do'],
   },
   mtsamis: {
-    id: 'mtsamis',
-    password:'xyz123',
-    name: 'Mike Tsamis',
-    avatarURL: null,
+    id: 'danabramov',
+    password: 'xyz123',
+    name: 'Dan Abramov',
+    avatarURL: "https://tylermcginnis.com/would-you-rather/dan.jpg",
     answers: {
       "xj352vofupe1dqz9emx13r": 'optionOne',
       "vthrdm985a262al8qx3do": 'optionTwo',
@@ -37,7 +37,7 @@ let users = {
   },
   zoshikanlu: {
     id: 'zoshikanlu',
-    password:'pass246',
+    password: 'pass246',
     name: 'Zenobia Oshikanlu',
     avatarURL: null,
     answers: {
@@ -45,7 +45,7 @@ let users = {
     },
     questions: [],
   }
-}
+};
 
 let questions = {
   "8xf0y6ziyjabvozdd253nd": {
@@ -126,29 +126,53 @@ let questions = {
       text: 'deploy to production once every month'
     }
   },
+};
+
+function generateUID() {
+  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 }
 
-function generateUID () {
-  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-}
-
-export function _getUsers () {
+/**
+ * This method is used to validate a user login.
+ * @param {*} id of the user
+ * @param {*} password of the user
+ * @returns {Promise<boolean>} Promise boolean represents the validation result
+ */
+export function _validateUserLogin(id, password) {
   return new Promise((resolve) => {
-    setTimeout(() => resolve({...users}), 1000)
-  })
+    let isValid = false;
+
+    if (users[id] === undefined) {
+      isValid = false;
+    } else {
+      const currentUserPassword = users[id].password;
+
+      if (currentUserPassword === password) {
+        isValid = true;
+      }
+    }
+
+    setTimeout(() => resolve(isValid), 1000);
+  });
 }
 
-export function _getQuestions () {
+export function _getUsers() {
   return new Promise((resolve) => {
-    setTimeout(() => resolve({...questions}), 1000)
-  })
+    setTimeout(() => resolve({ ...users }), 1000);
+  });
 }
 
-function formatQuestion ({ optionOneText, optionTwoText, author }) {
+export function _getQuestions() {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve({ ...questions }), 1000);
+  });
+}
+
+function formatQuestion({ optionOneText, optionTwoText, author }) {
   return {
     id: generateUID(),
-    timestamp: Date.now(),
     author,
+    timestamp: Date.now(),
     optionOne: {
       votes: [],
       text: optionOneText,
@@ -157,28 +181,28 @@ function formatQuestion ({ optionOneText, optionTwoText, author }) {
       votes: [],
       text: optionTwoText,
     }
-  }
+  };
 }
 
-export function _saveQuestion (question) {
+export function _saveQuestion(question) {
   return new Promise((resolve, reject) => {
     if (!question.optionOneText || !question.optionTwoText || !question.author) {
       reject("Please provide optionOneText, optionTwoText, and author");
     }
 
-    const formattedQuestion = formatQuestion(question)
+    const formattedQuestion = formatQuestion(question);
     setTimeout(() => {
       questions = {
         ...questions,
         [formattedQuestion.id]: formattedQuestion
-      }
+      };
 
-      resolve(formattedQuestion)
-    }, 1000)
-  })
+      resolve(formattedQuestion);
+    }, 1000);
+  });
 }
 
-export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
+export function _saveQuestionAnswer({ authedUser, qid, answer }) {
   return new Promise((resolve, reject) => {
     if (!authedUser || !qid || !answer) {
       reject("Please provide authedUser, qid, and answer");
@@ -194,7 +218,7 @@ export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
             [qid]: answer
           }
         }
-      }
+      };
 
       questions = {
         ...questions,
@@ -205,9 +229,9 @@ export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
             votes: questions[qid][answer].votes.concat([authedUser])
           }
         }
-      }
+      };
 
-      resolve(true)
-    }, 500)
-  })
+      resolve(true);
+    }, 500);
+  });
 }
