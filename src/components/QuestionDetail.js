@@ -31,12 +31,8 @@ const QuestionDetail = ({
     }
   };
 
-  let result = <div className='text-center d-flex flex-column align-items-center'>
-    <h2>No question found</h2>
-    <div role='button' className='gap-2 d-flex'>
-      <span className="material-icons-round">arrow_back</span>
-      <p onClick={handleGoBack}>Go Back</p>
-    </div>
+  let result = <div className='text-center'>
+    <h2>Loading</h2>
   </div>;
 
   if (question) {
@@ -118,15 +114,17 @@ const mapStateToProps = ({ questions, users, authUser }, { router }) => {
 
   const question = questions[question_id];
 
-  const totalVotedForTheFirstOption = question.optionOne.votes.length;
-  const totalVotedForTheSecondOption = question.optionTwo.votes.length;
 
-  const totalVotes = totalVotedForTheFirstOption + totalVotedForTheSecondOption;
-
-  const firstOptionVotedPercentage = (totalVotedForTheFirstOption / totalVotes) * 100;
-  const secondOptionVotedPercentage = (totalVotedForTheSecondOption / totalVotes) * 100;
 
   if (question) {
+    const totalVotedForTheFirstOption = question.optionOne.votes.length;
+    const totalVotedForTheSecondOption = question.optionTwo.votes.length;
+
+    const totalVotes = totalVotedForTheFirstOption + totalVotedForTheSecondOption;
+
+    const firstOptionVotedPercentage = Math.round((totalVotedForTheFirstOption / totalVotes) * 100);
+    const secondOptionVotedPercentage = Math.round((totalVotedForTheSecondOption / totalVotes) * 100);
+
     return {
       question,
       user: users[questions[question_id].author],
@@ -139,11 +137,7 @@ const mapStateToProps = ({ questions, users, authUser }, { router }) => {
     };
   }
 
-  return {
-    question,
-    authUser,
-    navigate: router.navigate,
-  };
+  router.navigate('*');
 };
 
 export default withRouter(connect(mapStateToProps)(QuestionDetail));
