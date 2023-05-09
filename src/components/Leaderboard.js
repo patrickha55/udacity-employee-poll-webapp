@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import prisonMike from '../images/prison-mike.png';
 import { connect } from 'react-redux';
 import './Leaderboard.style.css';
 
@@ -95,7 +96,10 @@ const Leaderboard = ({ sortedUsers }) => {
             (user, index) => (
               <tr key={user.id}>
                 <th scope='row'>{index + 1}</th>
-                <th scope='row'>{user.name}</th>
+                <th scope='row' className='d-flex flex-row flex-sm-column justify-content-around'>
+                  <img src={user.avatarURL ?? prisonMike} className='rounded-5' alt={`${user.id} avatar`} width={40} />
+                  <span>{user.name}</span>
+                </th>
                 <th scope='row'>{Object.keys(user.answers).length}</th>
                 <th scope='row'>{user.questions.length}</th>
               </tr>
