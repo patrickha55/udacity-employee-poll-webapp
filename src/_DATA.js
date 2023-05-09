@@ -139,6 +139,8 @@ function generateUID() {
  * @returns {Promise<boolean>} Promise boolean represents the validation result
  */
 export function _validateUserLogin(id, password) {
+  console.log('users', users);
+  console.log('questions', questions);
   return new Promise((resolve) => {
     let isValid = false;
 
@@ -192,6 +194,14 @@ export function _saveQuestion(question) {
 
     const formattedQuestion = formatQuestion(question);
     setTimeout(() => {
+      users = {
+        ...users,
+        [formattedQuestion.author]: {
+          ...users[formattedQuestion.author],
+          questions: users[formattedQuestion.author].questions.concat([formattedQuestion.id])
+        }
+      };
+
       questions = {
         ...questions,
         [formattedQuestion.id]: formattedQuestion
@@ -207,6 +217,18 @@ export function _saveQuestionAnswer({ authedUser, qid, answer }) {
     if (!authedUser || !qid || !answer) {
       reject("Please provide authedUser, qid, and answer");
     }
+
+    const anotherAnswerName = answer === 'optionOne' ? 'optionTwo' : 'optionOne';
+
+    const anotherAnswer = questions[qid][anotherAnswerName];
+
+    let anotherVotes = anotherAnswer.votes;
+
+    if (anotherVotes.includes(authedUser)) {
+      anotherVotes = anotherVotes.filter((vote) => vote !== authedUser);
+    }
+
+    const currentVotes = questions[qid][answer].votes;
 
     setTimeout(() => {
       users = {
@@ -226,7 +248,11 @@ export function _saveQuestionAnswer({ authedUser, qid, answer }) {
           ...questions[qid],
           [answer]: {
             ...questions[qid][answer],
-            votes: questions[qid][answer].votes.concat([authedUser])
+            votes: currentVotes.concat([authedUser]),
+          },
+          [anotherAnswerName]: {
+            ...anotherAnswer,
+            votes: anotherVotes,
           }
         }
       };
@@ -234,4 +260,4 @@ export function _saveQuestionAnswer({ authedUser, qid, answer }) {
       resolve(true);
     }, 500);
   });
-}
+};
