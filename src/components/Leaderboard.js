@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import prisonMike from '../images/prison-mike.png';
 import { connect } from 'react-redux';
 import './Leaderboard.style.css';
+import GoBack from './common/GoBack';
 
 const Leaderboard = ({ sortedUsers }) => {
   const [sortOrderUsers, setSortOrderUsers] = useState(0);
@@ -111,9 +112,10 @@ const Leaderboard = ({ sortedUsers }) => {
   );
 
   return (
-    <div style={{
-      minHeight: '80vh',
+    <div className='position-relative' style={{
+      minHeight: '88vh',
     }} >
+      <GoBack />
       <h1 className='text-center p-5'>Leaderboard</h1>
       {result}
     </div>

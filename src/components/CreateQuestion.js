@@ -6,6 +6,7 @@ import Button from './common/Button';
 import Input from './common/Input';
 import LoadingBar from 'react-redux-loading-bar';
 import withRouter from '../utils/routerHelper';
+import GoBack from './common/GoBack';
 
 const CreateQuestion = ({
   dispatch,
@@ -15,7 +16,8 @@ const CreateQuestion = ({
   return (
     <>
       <LoadingBar scope={CREATE_QUESTION_LOADING_SCOPE} />
-      <div className='shadow-lg rounded-3 my-2' style={{ minHeight: '86vh' }}>
+      <div className='shadow-lg rounded-3 my-2 position-relative' style={{ minHeight: '86vh' }}>
+        <GoBack />
         <h2 className='text-center pt-5 pb-2'>Would You Rather</h2>
         <h6 className='text-center text-secondary'>Create Your Own Poll</h6>
         <Formik

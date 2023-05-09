@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import withRouter from '../utils/routerHelper';
 import { handleChooseQuestionOption } from '../actions/questions';
+import GoBack from './common/GoBack';
 
 const QuestionDetail = ({
   question,
@@ -22,15 +23,6 @@ const QuestionDetail = ({
     dispatch(handleChooseQuestionOption(option));
   };
 
-  const handleGoBack = () => {
-    if (window.history.state && window.history.state.idx > 0) {
-      navigate(-1);
-    }
-    else {
-      navigate('/');
-    }
-  };
-
   let result = <div className='text-center'>
     <h2>Loading</h2>
   </div>;
@@ -41,10 +33,7 @@ const QuestionDetail = ({
 
     result = (
       <div className='px-4 py-5 my-5 text-center position-relative'>
-        <div role='button' className='gap-2 position-absolute top-0 left-0 d-flex'>
-          <span className="material-icons-round">arrow_back</span>
-          <p onClick={handleGoBack}>Go Back</p>
-        </div>
+        <GoBack />
         <img className='d-block mx-auto mb-4 rounded' src={user.avatarURL} alt='' width='200' height='200' />
         <h2 className='text-center'>Poll by {question.author}</h2>
         <div className='col-lg-8 mx-auto'>
