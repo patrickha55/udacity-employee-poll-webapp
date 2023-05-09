@@ -3,7 +3,17 @@ import { connect } from 'react-redux';
 import withRouter from '../utils/routerHelper';
 import { handleChooseQuestionOption } from '../actions/questions';
 
-const QuestionDetail = ({ question, user, authUser, navigate, dispatch }) => {
+const QuestionDetail = ({
+  question,
+  user,
+  authUser,
+  navigate,
+  dispatch,
+  totalVotedForTheFirstOption,
+  totalVotedForTheSecondOption,
+  firstOptionVotedPercentage,
+  secondOptionVotedPercentage,
+}) => {
   const handleClick = (event, qid, flag) => {
     event.preventDefault();
 
@@ -46,23 +56,49 @@ const QuestionDetail = ({ question, user, authUser, navigate, dispatch }) => {
           <div className='d-grid gap-2 d-sm-flex justify-content-sm-center'>
             <button
               type='button'
-              className='btn btn-primary btn-lg col-6'
+              className='btn btn-primary btn-lg col-6 d-flex flex-column justify-content-between position-relative'
               data-bs-toggle='button'
               autoComplete='off'
               onClick={(e) => handleClick(e, question.id, 0)}
               disabled={isTheFirstQuestionAnswered}
             >
               <p>{question.optionOne.text}</p>
+              {
+                (isTheFirstQuestionAnswered || isTheSecondQuestionAnswered) && (
+                  <div className='border-top w-100'>
+                    <small className='text-light d-flex flex-row justify-content-between'>
+                      <span>{totalVotedForTheFirstOption} votes</span>
+                      {
+                        isTheFirstQuestionAnswered && <span className="badge material-icons-outlined" style={{ fontSize: '1em' }}>check_circle</span>
+                      }
+                      <span>{firstOptionVotedPercentage} %</span>
+                    </small>
+                  </div>
+                )
+              }
             </button>
             <button
               type='button'
-              className='btn btn-danger btn-lg col-6'
+              className='btn btn-danger btn-lg col-6 d-flex flex-column justify-content-between'
               data-bs-toggle='button'
               autoComplete='off'
               onClick={(e) => handleClick(e, question.id, 1)}
               disabled={isTheSecondQuestionAnswered}
             >
-              <p>{question.optionTwo.text}</p>
+              <p className='w-100'>{question.optionTwo.text}</p>
+              {
+                (isTheFirstQuestionAnswered || isTheSecondQuestionAnswered) && (
+                  <div className='border-top w-100'>
+                    <small className='text-light d-flex flex-row justify-content-between'>
+                      <span>{totalVotedForTheSecondOption} votes</span>
+                      {
+                        isTheSecondQuestionAnswered && <span className="badge material-icons-outlined" style={{ fontSize: '1em' }}>check_circle</span>
+                      }
+                      <span>{secondOptionVotedPercentage} %</span>
+                    </small>
+                  </div>
+                )
+              }
             </button>
           </div>
         </div>
@@ -78,19 +114,28 @@ const QuestionDetail = ({ question, user, authUser, navigate, dispatch }) => {
 };
 
 const mapStateToProps = ({ questions, users, authUser }, { router }) => {
-  const { id } = router.params;
   const { question_id } = router.params;
 
-  const question = questions[id];
   const question = questions[question_id];
+
+  const totalVotedForTheFirstOption = question.optionOne.votes.length;
+  const totalVotedForTheSecondOption = question.optionTwo.votes.length;
+
+  const totalVotes = totalVotedForTheFirstOption + totalVotedForTheSecondOption;
+
+  const firstOptionVotedPercentage = (totalVotedForTheFirstOption / totalVotes) * 100;
+  const secondOptionVotedPercentage = (totalVotedForTheSecondOption / totalVotes) * 100;
 
   if (question) {
     return {
       question,
-      user: users[questions[id].author],
       user: users[questions[question_id].author],
       authUser,
       navigate: router.navigate,
+      totalVotedForTheFirstOption,
+      totalVotedForTheSecondOption,
+      firstOptionVotedPercentage,
+      secondOptionVotedPercentage,
     };
   }
 
