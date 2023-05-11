@@ -40,7 +40,6 @@ export const saveState = (key, value) => {
  */
 export const removeState = (key) => {
   try {
-    console.log('removing state from localStorage: ', key);
     localStorage.removeItem(key);
   } catch (error) {
     console.log(error);

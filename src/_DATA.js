@@ -1,4 +1,4 @@
-let users = {
+export let users = {
   sarahedo: {
     id: 'sarahedo',
     password: 'password123',
@@ -47,7 +47,7 @@ let users = {
   }
 };
 
-let questions = {
+export let questions = {
   "8xf0y6ziyjabvozdd253nd": {
     id: '8xf0y6ziyjabvozdd253nd',
     author: 'sarahedo',
@@ -139,8 +139,6 @@ function generateUID() {
  * @returns {Promise<boolean>} Promise boolean represents the validation result
  */
 export function _validateUserLogin(id, password) {
-  console.log('users', users);
-  console.log('questions', questions);
   return new Promise((resolve) => {
     let isValid = false;
 
@@ -193,6 +191,7 @@ export function _saveQuestion(question) {
     }
 
     const formattedQuestion = formatQuestion(question);
+
     setTimeout(() => {
       users = {
         ...users,

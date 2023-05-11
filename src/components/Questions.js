@@ -2,14 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Question from './Question';
+import { Link } from 'react-router-dom';
 
 const Questions = ({
   filteredQuestionIds,
   title
 }) => {
-  return (
-    <div className='shadow p-3 mt-2 mb-4 bg-body rounded'>
-      <h1 className='display-5 fw-lighter text-center p-4'>{title}</h1>
+  let result = <h4 className='text-center'>It's Empty! Add <Link to='/add'>new</Link>.</h4>;
+
+  if (filteredQuestionIds.length !== 0) {
+    result = (
       <div className='row mx-1 mb-2'>
         {
           filteredQuestionIds.map(id => (
@@ -21,6 +23,13 @@ const Questions = ({
           ))
         }
       </div>
+    );
+  }
+
+  return (
+    <div className='shadow p-3 mt-2 mb-4 bg-body rounded'>
+      <h1 className='display-5 fw-lighter text-center p-4'>{title}</h1>
+      {result}
     </div>
   );
 };
