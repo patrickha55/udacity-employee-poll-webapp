@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import withRouter from '../utils/routerHelper';
 import { handleChooseQuestionOption } from '../actions/questions';
@@ -15,6 +15,11 @@ const QuestionDetail = ({
   firstOptionVotedPercentage,
   secondOptionVotedPercentage,
 }) => {
+  useEffect(() => {
+    if (!question)
+      navigate('/not-found');
+  }, [navigate, question]);
+
   const handleClick = (event, qid, flag) => {
     event.preventDefault();
 
@@ -103,8 +108,6 @@ const mapStateToProps = ({ questions, users, authUser }, { router }) => {
 
   const question = questions[question_id];
 
-
-
   if (question) {
     const totalVotedForTheFirstOption = question.optionOne.votes.length;
     const totalVotedForTheSecondOption = question.optionTwo.votes.length;
@@ -126,7 +129,10 @@ const mapStateToProps = ({ questions, users, authUser }, { router }) => {
     };
   }
 
-  router.navigate('*');
+  return {
+    question: null,
+    navigate: router.navigate,
+  };
 };
 
 export default withRouter(connect(mapStateToProps)(QuestionDetail));
