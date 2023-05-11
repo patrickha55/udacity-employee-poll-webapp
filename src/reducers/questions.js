@@ -36,7 +36,19 @@ export default function questions(state = {}, action) {
         [action.question.id]: action.question,
       };
     case CHOOSE_QUESTION_OPTION:
-      const { authedUser, qid, answer } = action.option;
+      const { authedUser: authUser, qid, answer } = action.option;
+
+      const anotherAnswerName = answer === 'optionOne' ? 'optionTwo' : 'optionOne';
+
+      const anotherAnswer = state[qid][anotherAnswerName];
+
+      let anotherVotes = anotherAnswer.votes;
+
+      if (anotherVotes.includes(authUser)) {
+        anotherVotes = anotherVotes.filter((vote) => vote !== authUser);
+      }
+
+      const currentVotes = state[qid][answer].votes;
 
       return {
         ...state,
@@ -44,8 +56,12 @@ export default function questions(state = {}, action) {
           ...state[qid],
           [answer]: {
             ...state[qid][answer],
-            votes: state[qid][answer].votes.concat([authedUser]),
-          }
+            votes: currentVotes.concat([authUser]),
+          },
+          [anotherAnswerName]: {
+            ...anotherAnswer,
+            votes: anotherVotes,
+          },
         }
       };
     default:

@@ -1,4 +1,4 @@
-let users = {
+export let users = {
   sarahedo: {
     id: 'sarahedo',
     password: 'password123',
@@ -47,7 +47,7 @@ let users = {
   }
 };
 
-let questions = {
+export let questions = {
   "8xf0y6ziyjabvozdd253nd": {
     id: '8xf0y6ziyjabvozdd253nd',
     author: 'sarahedo',
@@ -191,7 +191,16 @@ export function _saveQuestion(question) {
     }
 
     const formattedQuestion = formatQuestion(question);
+
     setTimeout(() => {
+      users = {
+        ...users,
+        [formattedQuestion.author]: {
+          ...users[formattedQuestion.author],
+          questions: users[formattedQuestion.author].questions.concat([formattedQuestion.id])
+        }
+      };
+
       questions = {
         ...questions,
         [formattedQuestion.id]: formattedQuestion
@@ -207,6 +216,18 @@ export function _saveQuestionAnswer({ authedUser, qid, answer }) {
     if (!authedUser || !qid || !answer) {
       reject("Please provide authedUser, qid, and answer");
     }
+
+    const anotherAnswerName = answer === 'optionOne' ? 'optionTwo' : 'optionOne';
+
+    const anotherAnswer = questions[qid][anotherAnswerName];
+
+    let anotherVotes = anotherAnswer.votes;
+
+    if (anotherVotes.includes(authedUser)) {
+      anotherVotes = anotherVotes.filter((vote) => vote !== authedUser);
+    }
+
+    const currentVotes = questions[qid][answer].votes;
 
     setTimeout(() => {
       users = {
@@ -226,7 +247,11 @@ export function _saveQuestionAnswer({ authedUser, qid, answer }) {
           ...questions[qid],
           [answer]: {
             ...questions[qid][answer],
-            votes: questions[qid][answer].votes.concat([authedUser])
+            votes: currentVotes.concat([authedUser]),
+          },
+          [anotherAnswerName]: {
+            ...anotherAnswer,
+            votes: anotherVotes,
           }
         }
       };
@@ -234,4 +259,4 @@ export function _saveQuestionAnswer({ authedUser, qid, answer }) {
       resolve(true);
     }, 500);
   });
-}
+};

@@ -22,5 +22,6 @@ describe('Date helper', () => {
 
     // Assert
     expect(actual).not.toEqual('1 minutes ago');
+    expect(actual).not.toBeNull();
   });
 });

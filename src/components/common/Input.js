@@ -7,7 +7,6 @@
  *  handleChange: function,
  *  handleBlur: function,
  *  value: string,
- *  isRequired: boolean,
  *  placeHolder: string,
  *  type: string,
  * }} props
@@ -40,6 +39,8 @@ const Input = ({
             onBlur={handleBlur}
             value={value}
             placeholder={placeHolder}
+            autoComplete='on'
+            data-testid={`${name}RequiredInput`}
             required
           />
         ) : (
@@ -52,6 +53,8 @@ const Input = ({
             onBlur={handleBlur}
             placeholder={placeHolder}
             value={value}
+            data-testid={`${name}Input`}
+            autoComplete='on'
           />
         )
       }

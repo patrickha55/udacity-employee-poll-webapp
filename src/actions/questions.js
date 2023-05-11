@@ -58,6 +58,5 @@ export const handleChooseQuestionOption = (option) =>
       }
     } catch (error) {
       alert('Error choosing question option. Please try again.');
-      // TODO: Handle error.
     }
   };

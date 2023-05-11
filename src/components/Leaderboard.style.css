@@ -1,0 +1,14 @@
+.tableColumn:hover {
+  cursor: pointer;
+  color: #000000;
+
+  #answeredArrow,
+  #createdArrow {
+    display: inline-block;
+  }
+}
+
+#answeredArrow,
+#createdArrow {
+  display: none;
+}

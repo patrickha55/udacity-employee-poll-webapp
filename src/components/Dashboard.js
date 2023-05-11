@@ -1,4 +1,3 @@
-import { connect } from 'react-redux';
 import Questions from './Questions';
 
 const Dashboard = () => {
@@ -10,4 +9,4 @@ const Dashboard = () => {
   );
 };
 
-export default connect()(Dashboard);
+export default Dashboard;

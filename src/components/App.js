@@ -11,6 +11,7 @@ import Footer from './common/Footer';
 import CreateQuestion from './CreateQuestion';
 import withRouter from '../utils/routerHelper';
 import QuestionDetail from './QuestionDetail';
+import NotFound from './NotFound';
 
 function App({ dispatch, authUser, loading, navigate }) {
   useEffect(() => {
@@ -40,8 +41,8 @@ function App({ dispatch, authUser, loading, navigate }) {
             <Route path='/login' element={<Login />} />
             <Route path='/leaderboard' element={<Leaderboard />} />
             <Route path='/add' element={<CreateQuestion />} />
-            <Route path='/question/:id' element={<QuestionDetail />} />
-            <Route path='*' element={<h1>404 Not Found</h1>} />
+            <Route path='/question/:question_id' element={<QuestionDetail />} />
+            <Route path='*' element={<NotFound />} />
           </Routes>
       }
       <Footer />

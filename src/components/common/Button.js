@@ -8,7 +8,8 @@ const Button = ({
     <button
       type={type}
       className={`btn ${additionalClassNames}`}
-      disabled={isSubmitting}>
+      disabled={isSubmitting}
+      data-testid='defaultButton'>
       {name}
     </button>
   );
