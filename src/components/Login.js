@@ -17,12 +17,13 @@ const LoginSchema = Yup.object().shape({
     .required('Required'),
 });
 
-const Login = ({ dispatch, authUser, navigate, users }) => {
+const Login = ({ dispatch, authUser, navigate, users, location }) => {
+  const from = location?.state?.from;
   useEffect(() => {
     if (authUser !== '') {
-      navigate('/');
+      navigate(from || '/');
     }
-  }, [authUser, navigate]);
+  }, [authUser, navigate, from]);
 
   return (
     <>
@@ -184,6 +185,7 @@ const Login = ({ dispatch, authUser, navigate, users }) => {
 const mapStateToProps = ({ authUser, users }, { router }) => ({
   authUser,
   navigate: router.navigate,
+  location: router.location,
   users,
 });
 

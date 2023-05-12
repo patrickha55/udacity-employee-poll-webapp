@@ -14,16 +14,20 @@ import QuestionDetail from './QuestionDetail';
 import NotFound from './NotFound';
 import Questions from './Questions';
 
-function App({ dispatch, authUser, loading, navigate }) {
+function App({ dispatch, authUser, loading, navigate, location }) {
+  const pathname = location.pathname;
+
   useEffect(() => {
     if (authUser === null) {
       dispatch(loadInitialData());
     }
 
     if (authUser === '') {
-      navigate('/login');
+      if (pathname !== '/login') {
+        navigate('/login', { state: { from: pathname } });
+      }
     }
-  }, [dispatch, authUser, navigate]);
+  }, [dispatch, authUser, navigate, pathname]);
 
   const isUserLoggedIn = authUser !== null && authUser !== '';
 
@@ -58,6 +62,7 @@ const mapStateToProps = ({ authUser }, { router }) => ({
   loading: authUser === null,
   authUser,
   navigate: router.navigate,
+  location: router.location,
 });
 
 export default withRouter(connect(mapStateToProps)(App));
