@@ -18,7 +18,7 @@ describe('Test block for Login component', () => {
     const title = screen.getByText(/employee poll/i);
     const username = screen.getByText(/username/i);
     const password = screen.getByText(/password/i);
-    const submitBtn = screen.getByTestId(/defaultButton/);
+    const submitBtn = screen.getByTestId(/defaultButtonNormal/);
 
     expect(title).toBeInTheDocument();
     expect(username).toBeInTheDocument();
@@ -44,9 +44,17 @@ describe('Test block for Login component', () => {
 
   it('Should renders error messages when user submitting without filling input fields.', async () => {
     const user = userEvent.setup();
+
     renderWithProviders(<Login />);
-    const submitBtn = screen.getByTestId(/defaultButton/);
-    user.click(submitBtn);
+
+    const usernameInput = screen.getByTestId('usernameInput');
+    const passwordInput = screen.getByTestId('passwordInput');
+
+    user.type(usernameInput, 'test');
+    user.type(passwordInput, 'test');
+    user.clear(usernameInput);
+    user.clear(passwordInput);
+
     await waitFor(() => {
       const errorsMessages = screen.getAllByText(/required/i);
       expect(errorsMessages.length).toBe(2);

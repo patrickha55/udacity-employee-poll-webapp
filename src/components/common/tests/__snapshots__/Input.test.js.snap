@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test block for Input component should renders snapshot 1`] = `
+Array [
+  <label
+    className="form-label"
+    htmlFor="test"
+  >
+    Test Input
+  </label>,
+  <input
+    autoComplete="on"
+    className="form-control "
+    data-testid="testInputRequiredInput"
+    id="test"
+    name="testInput"
+    onBlur={[Function]}
+    onChange={[Function]}
+    placeholder="test"
+    required={true}
+    type="text"
+    value="test"
+  />,
+]
+`;
