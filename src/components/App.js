@@ -12,6 +12,7 @@ import CreateQuestion from './CreateQuestion';
 import withRouter from '../utils/routerHelper';
 import QuestionDetail from './QuestionDetail';
 import NotFound from './NotFound';
+import Questions from './Questions';
 
 function App({ dispatch, authUser, loading, navigate }) {
   useEffect(() => {
@@ -37,7 +38,10 @@ function App({ dispatch, authUser, loading, navigate }) {
           ? null
           :
           <Routes>
-            <Route path='/' exact element={<Dashboard />} />
+            <Route path='/' exact element={<Dashboard />}>
+              <Route path='/' element={<Questions title={'New Questions'} isNewQuestion={true} />} />
+              <Route path='completed' element={<Questions title={'Completed'} isNewQuestion={false} />} />
+            </Route>
             <Route path='/login' element={<Login />} />
             <Route path='/leaderboard' element={<Leaderboard />} />
             <Route path='/add' element={<CreateQuestion />} />

@@ -1,7 +1,7 @@
 import { render, screen, cleanup } from '@testing-library/react';
-import App from './App';
-import { renderWithProviders } from '../utils/testUtils';
-import { questions, users } from '../_DATA';
+import App from '../App';
+import { renderWithProviders } from '../../utils/testUtils';
+import { questions, users } from '../../_DATA';
 
 describe('App', () => {
   afterEach(() => {
@@ -64,7 +64,7 @@ describe('App', () => {
     const footer = screen.getByText(/employee poll - (\d)+/i);
 
     expect(appName).toBeInTheDocument();
-    expect(loginandSubmitBtn.length).toBe(2);
+    expect(loginandSubmitBtn.length).toBe(3);
     expect(username).toBeInTheDocument();
     expect(password).toBeInTheDocument();
     expect(footer).toBeInTheDocument();
@@ -97,7 +97,7 @@ describe('App', () => {
     expect(logout).toBeInTheDocument();
     expect(footer).toBeInTheDocument();
     expect(completed).toBeInTheDocument();
-    expect(variousUserAppearances.length).toBe(3);
-    expect(viewPollButtons.length).toBe(2);
+    expect(variousUserAppearances.length).toBe(2);
+    expect(viewPollButtons.length).toBe(1);
   });
 });
