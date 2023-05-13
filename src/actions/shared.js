@@ -3,7 +3,6 @@ import { _getQuestions, _getUsers } from '../_DATA';
 import { setAuthUser } from './authUser';
 import { receiveQuestions } from './questions';
 import { receiveUsers } from './users';
-import { loadState } from '../utils/localStorage';
 import { AUTH_KEY } from '../utils/common/constants';
 
 /**
@@ -20,18 +19,7 @@ export function loadInitialData() {
 
       dispatch(receiveUsers(users));
       dispatch(receiveQuestions(questions));
-
-      // This's for testing purpose only.
-      // dispatch(setAuthUser('tylermcginnis'));
-
-      const authUser = loadState(AUTH_KEY);
-
-      if (authUser !== undefined) {
-        dispatch(setAuthUser(authUser));
-      }
-      else {
-        dispatch(setAuthUser(''));
-      }
+      dispatch(setAuthUser(''));
 
       dispatch(hideLoading());
     } catch (error) {

@@ -18,12 +18,12 @@ const LoginSchema = Yup.object().shape({
 });
 
 const Login = ({ dispatch, authUser, navigate, users, location }) => {
-  const from = location?.state?.from;
+  const from = location?.state?.from || '/';
   useEffect(() => {
-    if (authUser !== '') {
-      navigate(from || '/');
+    if (authUser !== null && authUser !== '') {
+      navigate(from);
     }
-  }, [authUser, navigate, from]);
+  }, [authUser, navigate, location]);
 
   return (
     <>
@@ -59,6 +59,8 @@ const Login = ({ dispatch, authUser, navigate, users, location }) => {
                         values = { username: '', password: '' };
 
                         setSubmitting(false);
+
+                        navigate(from);
                       }, 400);
                     }}
                   >
@@ -141,6 +143,8 @@ const Login = ({ dispatch, authUser, navigate, users, location }) => {
                         values = { username: '', password: '' };
 
                         setSubmitting(false);
+
+                        navigate(from);
                       }, 400);
                     }}
                   >
