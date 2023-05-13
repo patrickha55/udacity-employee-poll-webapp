@@ -1,7 +1,6 @@
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { AUTH_KEY, LOGOUT_AUTH_USER, SET_AUTH_USER } from '../utils/common/constants';
 import { _validateUserLogin } from '../_DATA';
-import { loadState, removeState, saveState } from '../utils/localStorage';
 
 export const setAuthUser = (id) => ({
   type: SET_AUTH_USER,
@@ -45,12 +44,10 @@ export const handleAuthUser = (id, password) =>
       }
 
       dispatch(setAuthUser(id));
-      saveState(AUTH_KEY, id);
 
       return dispatch(hideLoading('login'));
     } catch (error) {
       dispatch(setAuthUser(''));
-      removeState(AUTH_KEY);
 
       dispatch(hideLoading('login'));
 
@@ -60,7 +57,7 @@ export const handleAuthUser = (id, password) =>
   };
 
 export const handleLogoutAuthUser = (id) =>
-  dispatch => {
+  (dispatch, getState) => {
     try {
       dispatch(showLoading());
 
@@ -68,19 +65,19 @@ export const handleLogoutAuthUser = (id) =>
         dispatch(logoutAuthUser(id));
       }, 1000);
 
-      if (loadState(AUTH_KEY) === undefined) {
+      const { authUser } = getState();
+
+      if (authUser === '' || authUser === undefined || authUser === null) {
         dispatch(hideLoading());
         console.warn('The user is not logged in.');
         return;
       }
 
-      removeState(AUTH_KEY);
       dispatch(setAuthUser(''));
 
       return dispatch(hideLoading());
     } catch (error) {
       dispatch(setAuthUser(id));
-      saveState(AUTH_KEY, id);
 
       dispatch(hideLoading());
 

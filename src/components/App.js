@@ -13,21 +13,14 @@ import withRouter from '../utils/routerHelper';
 import QuestionDetail from './QuestionDetail';
 import NotFound from './NotFound';
 import Questions from './Questions';
+import RequiredAuth from './RequiredAuth';
 
-function App({ dispatch, authUser, loading, navigate, location }) {
-  const pathname = location.pathname;
-
+function App({ dispatch, authUser, loading }) {
   useEffect(() => {
     if (authUser === null) {
       dispatch(loadInitialData());
     }
-
-    if (authUser === '') {
-      if (pathname !== '/login') {
-        navigate('/login', { state: { from: pathname } });
-      }
-    }
-  }, [dispatch, authUser, navigate, pathname]);
+  }, [dispatch, authUser]);
 
   const isUserLoggedIn = authUser !== null && authUser !== '';
 
@@ -42,14 +35,28 @@ function App({ dispatch, authUser, loading, navigate, location }) {
           ? null
           :
           <Routes>
-            <Route path='/' exact element={<Dashboard />}>
+            <Route path='/' exact element={
+              <RequiredAuth>
+                <Dashboard />
+              </RequiredAuth>
+            }>
               <Route path='/' element={<Questions title={'New Questions'} isNewQuestion={true} />} />
               <Route path='completed' element={<Questions title={'Completed'} isNewQuestion={false} />} />
             </Route>
             <Route path='/login' element={<Login />} />
-            <Route path='/leaderboard' element={<Leaderboard />} />
-            <Route path='/add' element={<CreateQuestion />} />
-            <Route path='/question/:question_id' element={<QuestionDetail />} />
+            <Route path='/leaderboard' element={
+              <RequiredAuth>
+                <Leaderboard />
+              </RequiredAuth>
+            } />
+            <Route path='/add' element={<RequiredAuth>
+              <CreateQuestion />
+            </RequiredAuth>} />
+            <Route path='/question/:question_id' element={
+              <RequiredAuth>
+                <QuestionDetail />
+              </RequiredAuth>
+            } />
             <Route path='*' element={<NotFound />} />
           </Routes>
       }
@@ -58,11 +65,9 @@ function App({ dispatch, authUser, loading, navigate, location }) {
   );
 }
 
-const mapStateToProps = ({ authUser }, { router }) => ({
+const mapStateToProps = ({ authUser }) => ({
   loading: authUser === null,
   authUser,
-  navigate: router.navigate,
-  location: router.location,
 });
 
-export default withRouter(connect(mapStateToProps)(App));
+export default connect(mapStateToProps)(App);
